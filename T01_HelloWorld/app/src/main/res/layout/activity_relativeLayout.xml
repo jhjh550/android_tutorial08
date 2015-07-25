@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="ID : "/>
+
+    <EditText
+        android:layout_alignBottom="@id/textID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/textID"/>
+
+    <TextView
+        android:id="@+id/textPW"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_below="@id/textID"
+        android:text="PW : "/>
+
+    <EditText
+        android:layout_alignBottom="@id/textPW"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/textPW"/>
+
+    <Button
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textPW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="LOGIN"/>
+
+</RelativeLayout>
