@@ -4,6 +4,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -12,6 +14,28 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        RadioGroup rgroup = (RadioGroup)findViewById(R.id.rgroup);
+        rgroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rbutton1:
+                        Toast.makeText(MainActivity.this,
+                                "red", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.rbutton2:
+                        Toast.makeText(MainActivity.this,
+                                "green", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.rbutton3:
+                        Toast.makeText(MainActivity.this,
+                                "blue", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+
     }
 
     @Override
