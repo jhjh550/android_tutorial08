@@ -59,6 +59,7 @@
         android:textOff="off text"/>
 
     <EditText
+        android:text="aa"
         android:hint="input here"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
