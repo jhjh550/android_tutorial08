@@ -15,6 +15,19 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         TextView textView = (TextView)findViewById(R.id.textView);
+        MyDBHandler dbHandler = new MyDBHandler(this);
+
+        dbHandler.insert("kim", 11, "seoul");
+        dbHandler.insert("park", 12, "busan");
+        dbHandler.insert("lee", 13, "서울");
+        dbHandler.insert("hong", 14, "부산");
+
+        dbHandler.updateAge("kim", 15);
+        dbHandler.delete("park");
+
+        String result = dbHandler.getStudnetData();
+        textView.setText(result);
+
     }
 
     @Override
