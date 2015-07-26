@@ -1,7 +1,8 @@
 package com.example.c.t03_widget;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
@@ -38,12 +39,15 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+
+
         CheckBox checkBox = (CheckBox)findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Toast.makeText(MainActivity.this, "check box "+isChecked,
                         Toast.LENGTH_SHORT).show();
+                Log.i("aaa", "aaa");
             }
         });
 
