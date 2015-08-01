@@ -35,6 +35,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void run() {
                 while(true){
+<<<<<<< HEAD
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
@@ -50,8 +51,23 @@ public class MainActivity extends ActionBarActivity {
                             //progressBar.setProgress(mp.getCurrentPosition());
                             //Log.d("MediaPlayer", "value:"+mp.getCurrentPosition());
                         }
+=======
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+                    
+                    if( mp != null){
+                        if(mp.isPlaying()){
+                            float progress = (float)mp.getCurrentPosition() / (float)mp.getDuration();
+                            progressBar.setProgress((int)progress*100);
+                        }
+>>>>>>> 2ff950380f23de8a21f722289d150781c744f3d8
+                    }
+                    //progressBar.setProgress(mp.getCurrentPosition());
                 }
+            
             }
         }).start();
 
