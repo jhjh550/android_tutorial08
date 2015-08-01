@@ -31,10 +31,10 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         textView = (TextView)findViewById(R.id.textView);
-        MyXMLTask task = new MyXMLTask();
+        MyXMLTask task = new MyXMLTask(textView);
         task.execute("http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=1159054000");
 
-        textView.setText( task.getStr() );
+        //textView.setText( task.getStr() );
     }
 
     @Override

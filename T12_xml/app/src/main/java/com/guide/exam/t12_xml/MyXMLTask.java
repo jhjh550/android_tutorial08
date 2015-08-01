@@ -1,6 +1,7 @@
 package com.guide.exam.t12_xml;
 
 import android.os.AsyncTask;
+import android.widget.TextView;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,6 +17,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
  */
 class MyXMLTask extends AsyncTask<String, Void, Document> {
 
+    MyXMLTask(TextView textView){
+        this.textView = textView;
+    }
+
+    private TextView textView;
     private String str="";
 
     public String getStr(){
@@ -69,7 +75,7 @@ class MyXMLTask extends AsyncTask<String, Void, Document> {
         }
 
 
-        //textView.setText(str);
+        textView.setText(str);
     }
 }
 
