@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import java.io.IOException;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
 public class MainActivity extends ActionBarActivity {
 
     MediaPlayer mp = null;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,31 @@ public class MainActivity extends ActionBarActivity {
 
         Button btnPlay = (Button)findViewById(R.id.btnPlay);
         Button btnStop = (Button)findViewById(R.id.btnStop);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
+
+
+//        mp.getCurrentPosition();
+//        mp.getDuration();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    if(mp != null){
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        //float progress = (float)mp.getCurrentPosition() / (float)mp.getDuration();
+                        //progressBar.setProgress((int)progress*100);
+                        progressBar.setProgress(mp.getCurrentPosition());
+                    }
+                }
+            }
+        }).start();
+
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +67,7 @@ public class MainActivity extends ActionBarActivity {
                 }
 
                 mp.start();
+                progressBar.setMax(mp.getDuration());
             }
         });
 

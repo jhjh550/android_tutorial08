@@ -18,4 +18,11 @@
         android:text="STOP"
         android:layout_toRightOf="@id/btnPlay"/>
 
+    <ProgressBar
+        style="?android:progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnPlay"
+        android:id="@+id/progressBar"/>
+
 </RelativeLayout>
