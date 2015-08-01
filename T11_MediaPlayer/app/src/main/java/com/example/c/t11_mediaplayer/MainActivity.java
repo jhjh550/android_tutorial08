@@ -34,18 +34,21 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void run() {
                 while(true){
-                    if(mp != null){
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        //float progress = (float)mp.getCurrentPosition() / (float)mp.getDuration();
-                        //progressBar.setProgress((int)progress*100);
-                        progressBar.setProgress(mp.getCurrentPosition());
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+                    
+                    if( mp != null){
+                        if(mp.isPlaying()){
+                            float progress = (float)mp.getCurrentPosition() / (float)mp.getDuration();
+                            progressBar.setProgress((int)progress*100);
+                        }
+                    }
+                    //progressBar.setProgress(mp.getCurrentPosition());
                 }
+            
             }
         }).start();
 
