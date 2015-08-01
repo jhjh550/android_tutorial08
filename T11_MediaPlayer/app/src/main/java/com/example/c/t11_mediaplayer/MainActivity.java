@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,16 +35,21 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void run() {
                 while(true){
-                    if(mp != null){
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
 
-                        //float progress = (float)mp.getCurrentPosition() / (float)mp.getDuration();
-                        //progressBar.setProgress((int)progress*100);
-                        progressBar.setProgress(mp.getCurrentPosition());
+                    if(mp != null){
+
+                        if(mp.isPlaying()) {
+
+                            float progress = (float) mp.getCurrentPosition() / (float) mp.getDuration();
+                            progressBar.setProgress((int) (progress * 100));
+                            //progressBar.setProgress(mp.getCurrentPosition());
+                            //Log.d("MediaPlayer", "value:"+mp.getCurrentPosition());
+                        }
                     }
                 }
             }
@@ -67,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
                 }
 
                 mp.start();
-                progressBar.setMax(mp.getDuration());
+                //progressBar.setMax(mp.getDuration());
             }
         });
 
