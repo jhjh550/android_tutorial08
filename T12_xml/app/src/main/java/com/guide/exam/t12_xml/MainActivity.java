@@ -5,8 +5,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,6 +20,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    TextView textView;
 
     class MyXMLTask extends AsyncTask<String, Void, Document>{
 
@@ -41,6 +47,35 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(Document document) {
             super.onPostExecute(document);
+
+            String str="";
+            NodeList nodeList = document.getElementsByTagName("data");
+            for(int i=0; i<nodeList.getLength(); i++){
+                Element DataElement = (Element)nodeList.item(i);// <data>...</data>
+
+
+                NodeList dayNodeList = DataElement.getElementsByTagName("day");
+                Element dayElement = (Element)dayNodeList.item(0);// <day>0</day>
+
+                NodeList dayTextNodeList = dayElement.getChildNodes();
+                str += "day : "+dayTextNodeList.item(0).getNodeValue();// 0
+
+
+                NodeList hourNodeList = DataElement.getElementsByTagName("hour");
+                Element hourElement = (Element)dayNodeList.item(0);// <hour>0</hour>
+
+                NodeList hourTextNodeList = dayElement.getChildNodes();
+                str += "hour : "+hourTextNodeList.item(0).getNodeValue();// 0
+
+                //
+                //
+                //
+
+                str += "\n";
+            }
+
+
+            textView.setText(str);
         }
     }
 
@@ -49,6 +84,10 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        textView = (TextView)findViewById(R.id.textView);
+        MyXMLTask task = new MyXMLTask();
+        task.execute("http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=1159054000");
     }
 
     @Override
