@@ -98,7 +98,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button btnProgress2 = (Button)findViewById(R.id.buttonProgress2);
+        btnProgress2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+                dialog.setMessage("Now Loading...");
+                dialog.setCancelable(false);
+                dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                dialog.setProgress(0);
+                dialog.show();
 
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int progress = 0;
+                        while(progress<100){
+                            progress++;
+                            dialog.setProgress(progress);
+
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        dialog.dismiss();;
+                    }
+                }).start();
+            }
+        });
     }
 
     @Override
