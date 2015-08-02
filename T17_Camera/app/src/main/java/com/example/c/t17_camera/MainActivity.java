@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,10 +21,28 @@ public class MainActivity extends AppCompatActivity {
 
     String path;
     static final int TAKE_PICTURE = 1;
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("path", path);
+
+        outState.putBundle("saved_data", bundle);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        if(savedInstanceState != null){
+            Bundle bundle = savedInstanceState.getBundle("saved_data");
+            path = bundle.getString("path");
+            loadBitmap();
+        }
 
         path = Environment.getExternalStorageDirectory().toString()+"/t17_image.jpg";
         Button btnTake = (Button)findViewById(R.id.btnTake);
@@ -43,17 +62,21 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == TAKE_PICTURE){
             if(resultCode == RESULT_OK){
-                Bitmap bitmap = null;
-
-                try{
-                    bitmap = BitmapFactory.decodeFile(path);
-                    ImageView img = (ImageView)findViewById(R.id.imageView);
-                    img.setImageBitmap(bitmap);
-                    img.invalidate();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                loadBitmap();
             }
+        }
+    }
+
+    private void loadBitmap() {
+        Bitmap bitmap = null;
+
+        try{
+            bitmap = BitmapFactory.decodeFile(path);
+            ImageView img = (ImageView)findViewById(R.id.imageView);
+            img.setImageBitmap(bitmap);
+            img.invalidate();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
