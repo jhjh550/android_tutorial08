@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         try{
             bitmap = BitmapFactory.decodeFile(path);
+            bitmap = Bitmap.createScaledBitmap(bitmap, 1024, 1024, true);
             ImageView img = (ImageView)findViewById(R.id.imageView);
             img.setImageBitmap(bitmap);
             img.invalidate();
