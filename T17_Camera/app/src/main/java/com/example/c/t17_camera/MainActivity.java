@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
     static final int TAKE_PICTURE = 1;
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
 
         Bundle bundle = new Bundle();
         bundle.putString("path", path);
