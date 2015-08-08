@@ -13,5 +13,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/counterFragment"
         android:name="com.example.c.t20_fragment.MyCounterFragment"
-        />
+        tools:layout="@layout/counter_fragment" />
 </RelativeLayout>
