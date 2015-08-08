@@ -57,13 +57,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0.1f, locationListener);
-
-
-
-
-
-
+        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        //manager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
     }
 
     @Override
