@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     Geocoder geocoder;
 
     EditText editLat, editLng, editAddress;
+    InputMethodManager imm;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         textView = (TextView)findViewById(R.id.textView);
 
+        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         LocationManager manager = (LocationManager)getSystemService(LOCATION_SERVICE);
         List<String> providers = manager.getAllProviders();
 
@@ -76,6 +81,25 @@ public class MainActivity extends AppCompatActivity {
 
         geocoder = new Geocoder(this);
         Button btnUp = (Button)findViewById(R.id.btnUp);
+        btnUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String strAddress = editAddress.getText().toString();
+
+                List<Address> list = null;
+                try {
+                    list = geocoder.getFromLocationName(strAddress, 10);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if(list != null){
+                    Address address = (Address)list.get(0);
+                    editLat.setText(""+address.getLatitude());
+                    editLng.setText(""+address.getLatitude());
+                }
+            }
+        });
 
         Button btnDown = (Button)findViewById(R.id.btnDown);
         btnDown.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
                 if (list != null) {
                     editAddress.setText(list.get(0).toString());
                 }
+
+                //imm.hideSoftInputFromWindow(editAddress.getWindowToken(), 0);
             }
         });
 
