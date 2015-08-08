@@ -14,10 +14,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     String str;
+    TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        textView = (TextView)findViewById(R.id.textView);
 
         LocationManager manager = (LocationManager)getSystemService(LOCATION_SERVICE);
         List<String> providers = manager.getAllProviders();
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0; i<providers.size(); i++){
             str += providers.get(i) +" : " + manager.isProviderEnabled(providers.get(i))+"\n";
         }
+        textView.setText(str);
 
         LocationListener locationListener = new LocationListener() {
             @Override
@@ -33,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
                 str += "\nlat : " + location.getLatitude();
                 str += " long : " + location.getLongitude();
                 str += " alt : " +  location.getAltitude();
+
+                textView.setText(str);
             }
 
             @Override
@@ -51,14 +57,13 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,10000,0.1f,locationListener);
+        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0.1f, locationListener);
 
 
 
 
 
-        TextView textView = (TextView)findViewById(R.id.textView);
-        textView.setText(str);
+
     }
 
     @Override
