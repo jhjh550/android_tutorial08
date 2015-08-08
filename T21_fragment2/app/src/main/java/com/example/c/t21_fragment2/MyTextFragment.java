@@ -14,6 +14,7 @@ public class MyTextFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = inflater.inflate(R.layout.text_fragment, container, false);
+        return rootView;
     }
 }
