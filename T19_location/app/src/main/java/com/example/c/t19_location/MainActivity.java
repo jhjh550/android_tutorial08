@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 if(list != null){
                     Address address = (Address)list.get(0);
                     editLat.setText(""+address.getLatitude());
-                    editLng.setText(""+address.getLatitude());
+                    editLng.setText(""+address.getLongitude());
                 }
             }
         });
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     editAddress.setText(list.get(0).toString());
                 }
 
-                //imm.hideSoftInputFromWindow(editAddress.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(editLat.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
 
