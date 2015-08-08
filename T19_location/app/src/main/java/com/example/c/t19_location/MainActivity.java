@@ -1,5 +1,7 @@
 package com.example.c.t19_location;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -7,14 +9,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     String str;
     TextView textView;
+    Geocoder geocoder;
+
+    EditText editLat, editLng, editAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +69,35 @@ public class MainActivity extends AppCompatActivity {
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
         //manager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
+
+        editLat = (EditText)findViewById(R.id.editLatitude);
+        editLng = (EditText)findViewById(R.id.editLongitude);
+        editAddress = (EditText)findViewById(R.id.editAddress);
+
+        geocoder = new Geocoder(this);
+        Button btnUp = (Button)findViewById(R.id.btnUp);
+
+        Button btnDown = (Button)findViewById(R.id.btnDown);
+        btnDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Double dLat = Double.parseDouble(editLat.getText().toString());
+                Double dLng = Double.parseDouble(editLng.getText().toString());
+
+                List<Address> list = null;
+                try {
+                    list = geocoder.getFromLocation(dLat, dLng, 10);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if (list != null) {
+                    editAddress.setText(list.get(0).toString());
+                }
+            }
+        });
+
+
     }
 
     @Override
