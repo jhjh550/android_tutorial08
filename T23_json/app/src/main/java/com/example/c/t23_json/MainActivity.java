@@ -1,5 +1,7 @@
 package com.example.c.t23_json;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +28,97 @@ public class MainActivity extends AppCompatActivity {
     String str = "[ {'name':'kim', 'tel':'010-1111-2222', 'age':20}," +
             "{'name':'park', 'tel':'010-2222-3333', 'age':30}," +
             "{'name':'lee', 'tel':'010-3333-4444', 'age':40} ]";
+
+    class GetContacs extends AsyncTask<Void, Void, Void>{
+        ProgressDialog pDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if(pDialog.isShowing())
+                pDialog.dismiss();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            String strJson = getResponseString("http://api.androidhive.info/contacts/", GET, null);
+            Log.d("JSON", strJson);
+
+            try {
+                JSONObject obj = new JSONObject(strJson);
+                JSONArray contacts = obj.getJSONArray("contacts");
+                for(int i=0; i<contacts.length(); i++){
+                    JSONObject c = contacts.getJSONObject(i);
+
+                    String id = c.getString("id");
+                    String name = c.getString("name");
+                    String email = c.getString("email");
+                    String address = c.getString("address");
+                    String gender = c.getString("gender");
+                    JSONObject phone = c.getJSONObject("phone");
+                    String mobile = phone.getString("mobile");
+                    String home = phone.getString("home");
+                    String office = phone.getString("office");
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        public String getResponseString(String url, int method, List<NameValuePair> params){
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpResponse httpResponse = null;
+            HttpEntity httpEntity = null;
+            String responseStr="";
+            try {
+                if (method == POST) {
+                    HttpPost httpPost = new HttpPost(url);
+                    if (params != null) {
+                        httpPost.setEntity(new UrlEncodedFormEntity(params));
+                    }
+                    httpResponse = httpClient.execute(httpPost);
+
+                } else if (method == GET) {
+                    if(params != null){
+                        String paramString = URLEncodedUtils.format(params, "utf-8");
+                        url += "?"+paramString;
+                    }
+                    HttpGet httpGet = new HttpGet(url);
+                    httpResponse = httpClient.execute(httpGet);
+
+                }
+                httpEntity = httpResponse.getEntity();
+                responseStr = EntityUtils.toString(httpEntity);
+
+
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return responseStr;
+        }
+
+    }
+
+
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +137,13 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        //http://api.androidhive.info/contacts/
+
+        GetContacs task = new GetContacs();
+        task.execute();
+
+
+
     }
 
     @Override
@@ -71,38 +171,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int POST = 1;
     public static final int GET = 2;
 
-    public String getResponseString(String url, int method, List<NameValuePair> params){
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpResponse httpResponse = null;
-        HttpEntity httpEntity = null;
-        String responseStr="";
-        try {
-            if (method == POST) {
-                HttpPost httpPost = new HttpPost(url);
-                if (params != null) {
-                    httpPost.setEntity(new UrlEncodedFormEntity(params));
-                }
-                httpResponse = httpClient.execute(httpPost);
 
-            } else if (method == GET) {
-                if(params != null){
-                    String paramString = URLEncodedUtils.format(params, "utf-8");
-                    url += "?"+paramString;
-                }
-                HttpGet httpGet = new HttpGet(url);
-                httpResponse = httpClient.execute(httpGet);
-
-            }
-            httpEntity = httpResponse.getEntity();
-            responseStr = EntityUtils.toString(httpEntity);
-
-
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return responseStr;
-    }
 }
 
 
