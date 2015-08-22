@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://www.daum.net");
+        //webView.loadUrl("http://www.daum.net");
+        webView.loadUrl("file:///android_asset/hello.html");
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         webView.setWebChromeClient(webChromeClient);
