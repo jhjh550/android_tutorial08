@@ -4,12 +4,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 public class MainActivity extends AppCompatActivity {
     WebView webView;
+    ProgressBar progressBar;
+
+    WebChromeClient webChromeClient = new WebChromeClient(){
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+
+            if(newProgress == 100)
+                progressBar.setVisibility(View.INVISIBLE);
+            else {
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setProgress(newProgress);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +39,19 @@ public class MainActivity extends AppCompatActivity {
         settings.setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl("http://www.daum.net");
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        webView.setWebChromeClient(webChromeClient);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        if(webView.canGoBack())
+            webView.goBack();
+        else
+            finish();
     }
 
     @Override
