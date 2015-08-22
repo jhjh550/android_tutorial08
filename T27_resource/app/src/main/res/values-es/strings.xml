@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="playButton">Tocar</string>
+    <string name="stopButton">Detener</string>
+</resources>
