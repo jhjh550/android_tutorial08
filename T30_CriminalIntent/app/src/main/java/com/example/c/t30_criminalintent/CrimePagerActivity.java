@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.ViewParent;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by c on 2015-08-23.
@@ -39,5 +40,14 @@ public class CrimePagerActivity extends AppCompatActivity {
                 return mCrimes.size();
             }
         });
+
+        UUID crimeId = (UUID) getIntent().getSerializableExtra(CrimeFragment.EXTRA_CRIME_ID);
+        for(int i=0; i<mCrimes.size(); i++){
+            if(mCrimes.get(i).getId().equals(crimeId)){
+                mViewPager.setCurrentItem(i);
+                break;
+            }
+        }
+
     }
 }
