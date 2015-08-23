@@ -28,10 +28,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
                         .show();
-//                Snackbar
-//                        .make(parentLayout, R.string.snackbar_text, Snackbar.LENGTH_LONG)
-//                        .setAction(R.string.snackbar_action, myOnClickListener)
-//                        .show();
             }
         });
     }
