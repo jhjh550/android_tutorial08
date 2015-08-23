@@ -26,8 +26,9 @@ public class CrimeListFragment extends ListFragment{
         getActivity().setTitle("범죄 리스트");
         mCrimes = CrimeLab.get().getCriems();
 
-        ArrayAdapter<Crime> adapter = new ArrayAdapter<Crime>(getActivity(),
-                android.R.layout.simple_list_item_1, mCrimes);
+//        ArrayAdapter<Crime> adapter = new ArrayAdapter<Crime>(getActivity(),
+//                android.R.layout.simple_list_item_1, mCrimes);
+        CrimeAdapter adapter = new CrimeAdapter(mCrimes);
         setListAdapter(adapter);
     }
 
