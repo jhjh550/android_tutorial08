@@ -49,5 +49,25 @@ public class CrimePagerActivity extends AppCompatActivity {
             }
         }
 
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Crime c = mCrimes.get(position);
+                if(c.getTitle() != null){
+                    setTitle(c.getTitle());
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 }
