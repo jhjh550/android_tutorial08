@@ -1,5 +1,6 @@
 package com.example.c.t30_criminalintent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,10 +14,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.util.UUID;
+
 /**
  * Created by c on 2015-08-22.
  */
 public class CrimeFragment extends Fragment {
+    public static final String EXTRA_CRIME_ID = "CRIMEID";
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
@@ -26,6 +30,11 @@ public class CrimeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCrime = new Crime();
+
+        Intent intent = (Intent) getActivity().getIntent();
+        UUID crimeId  = (UUID) intent.getSerializableExtra(EXTRA_CRIME_ID);
+
+        mCrime = CrimeLab.get().getCrime(crimeId);
     }
 
     @Nullable
