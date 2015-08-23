@@ -19,6 +19,12 @@ public class CrimeLab {
 
     public CrimeLab(){
         mCrimes = new ArrayList<Crime>();
+        for(int i=0; i<100; i++){
+            Crime c = new Crime();
+            c.setTitle("범죄 "+i);
+            c.setSolved(i%2==0);
+            mCrimes.add(c);
+        }
     }
 
     public ArrayList<Crime> getCriems(){
